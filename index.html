@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Needs Australia — Cruise · Fly · Roam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@300;400;500;600;700;800&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tomato:#FF6347;
+  --tomato-dark:#D94F37;
+  --tomato-light:#FF8A70;
+  --blue:#1A4FA0;
+  --blue-light:#3B82F6;
+  --blue-pale:#EFF6FF;
+  --gold:#C9A84C;
+  --gold-light:#F0D078;
+  --neon-cyan:#00F5FF;
+  --neon-green:#39FF14;
+  --neon-pink:#FF10F0;
+  --white:#FFFFFF;
+  --cream:#FDFAF6;
+  --sand:#F7F1E8;
+  --text:#1A2433;
+  --text-mid:#4A5568;
+  --text-light:#8A9BB0;
+  --radius:14px;
+  --radius-lg:22px;
+  --shadow:0 4px 24px rgba(0,0,0,0.10);
+  --shadow-lg:0 12px 48px rgba(0,0,0,0.14);
+}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  overflow-x:hidden
+}
+h1,h2,h3{
+  font-family:'Raleway',sans-serif
+}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--tomato);border-radius:3px}
+
+/* ─── NAV ─── */
+.nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:1000;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:24px;
+  padding:0 3%;
+  height:80px;
+  background:#000;
+  border-bottom:1px solid transparent;
+  box-shadow:none;
+  transition:background .4s,border-color .4s,box-shadow .4s,height .3s;
+}
+.nav .nav-links a{
+  text-decoration:none;
+  color:rgba(255,255,255,.92);
+  font-weight:700;font-size:14px;
+  font-family:'Raleway',sans-serif;
+  position:relative;
+  transition:color .25s;letter-spacing:.4px;
+}
+.nav .hamburger span{background:white}
+.nav.solid{
+  background:#000;
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,99,71,0.15);
+  box-shadow:0 4px 30px rgba(0,0,0,.25);
+  height:68px;
+}
+.nav.solid .nav-links a{color:rgba(255,255,255,.85)}
+.nav.solid .hamburger span{background:#fff}
+.nav-logo img{
+  height:56px;width:auto;max-width:150px;object-fit:contain;
+  transition:transform .3s,filter .4s;
+}
+.nav:not(.solid) .nav-logo img{filter:brightness(1.15) drop-shadow(0 2px 8px rgba(0,0,0,.3))}
+.nav-logo img:hover{transform:scale(1.05)}
+
+.nav-links{
+  display:flex;align-items:center;justify-content:center;
+  gap:22px;list-style:none;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--tomato),var(--blue-light));
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;border-radius:2px;
+}
+.nav-links a:hover{color:var(--tomato-light)!important}
+.nav.solid .nav-links a:hover{color:var(--tomato)!important}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{
+  background:var(--tomato)!important;color:white!important;
+  padding:9px 22px;border-radius:50px;font-weight:800!important;
+  box-shadow:0 4px 16px rgba(255,99,71,.45);transition:all .3s!important;
+}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{
+  background:var(--tomato-dark)!important;
+  box-shadow:0 0 20px var(--neon-cyan),0 0 40px rgba(0,245,255,.3)!important;
+  transform:translateY(-2px);
+}
+
+/* ─── NAV RIGHT ACTIONS ─── */
+.nav-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+
+.nav-search-wrap{
+  display:flex;align-items:center;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50px;
+  overflow:hidden;
+  transition:all .35s ease;
+  max-width:38px;
+  height:38px;
+  backdrop-filter:blur(8px);
+}
+.nav-search-wrap.expanded{
+  max-width:220px;
+  background:rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.3);
+  box-shadow:0 0 0 3px rgba(255,99,71,.15);
+}
+.nav-search-btn{
+  width:36px;height:36px;flex-shrink:0;
+  border:none;background:transparent;
+  color:rgba(255,255,255,.85);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;transition:color .2s;border-radius:50%;
+  padding:0 0 0 2px;
+}
+.nav-search-btn:hover{color:var(--tomato-light)}
+.nav-search-input{
+  border:none;background:transparent;outline:none;
+  color:white;font-size:13px;font-family:'Raleway',sans-serif;font-weight:600;
+  width:0;padding:0;transition:width .35s ease,padding .35s ease;
+  letter-spacing:.3px;
+}
+.nav-search-input::placeholder{color:rgba(255,255,255,.45)}
+.nav-search-wrap.expanded .nav-search-input{width:160px;padding:0 12px 0 2px;}
+
+.nav-cart-btn{
+  position:relative;
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);
+  color:rgba(255,255,255,.9);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .3s;font-size:16px;
+}
+.nav-cart-btn:hover{
+  background:var(--tomato);border-color:var(--tomato);
+  box-shadow:0 0 16px rgba(255,99,71,.5);
+  transform:translateY(-1px);
+}
+.nav-cart-badge{
+  position:absolute;top:-4px;right:-4px;
+  min-width:18px;height:18px;border-radius:9px;
+  background:var(--tomato);color:white;
+  font-size:10px;font-weight:800;font-family:'Raleway',sans-serif;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 4px;
+  border:2px solid #000;
+  transition:transform .3s,opacity .3s;
+  opacity:0;transform:scale(0);
+}
+.nav-cart-badge.has-items{
+  opacity:1;transform:scale(1);
+  box-shadow:0 2px 8px rgba(255,99,71,.5);
+}
+
+.nav-login-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 18px;border-radius:50px;
+  border:1.5px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);
+  color:rgba(255,255,255,.92);
+  font-size:13px;font-weight:800;font-family:'Raleway',sans-serif;
+  cursor:pointer;transition:all .3s;letter-spacing:.3px;white-space:nowrap;
+  text-decoration:none;
+}
+.nav-login-btn:hover{
+  background:white;color:var(--text);
+  border-color:white;
+  box-shadow:0 4px 16px rgba(255,255,255,.2);
+  transform:translateY(-1px);
+}
+.nav-login-btn svg{width:14px;height:14px;flex-shrink:0}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
+.hamburger span{display:block;width:24px;height:2px;border-radius:2px;transition:.3s}
+
+.mobile-menu{
+  display:none;position:fixed;top:68px;left:0;right:0;
+  background:#0a0a0a;border-bottom:2px solid var(--tomato);
+  padding:20px 5%;z-index:999;flex-direction:column;gap:4px;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  text-decoration:none;color:rgba(255,255,255,.8);font-weight:700;font-size:16px;
+  font-family:'Raleway',sans-serif;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);
+  transition:color .2s,padding-left .2s;
+}
+.mobile-menu a:hover{color:var(--tomato-light);padding-left:8px}
+.mobile-menu-actions{display:flex;gap:10px;padding-top:12px}
+.mobile-search-bar{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:10px 14px;margin-bottom:8px;
+}
+.mobile-search-bar input{
+  flex:1;border:none;background:transparent;color:white;
+  font-size:14px;font-family:'Raleway',sans-serif;font-weight:600;outline:none;
+}
+.mobile-search-bar input::placeholder{color:rgba(255,255,255,.35)}
+.mob-login-btn{
+  flex:1;padding:11px 16px;border-radius:50px;
+  border:1.5px solid rgba(255,255,255,.2);background:transparent;
+  color:rgba(255,255,255,.8);font-weight:800;font-family:'Raleway',sans-serif;
+  font-size:14px;cursor:pointer;transition:all .3s;
+}
+.mob-login-btn:hover{background:white;color:var(--text);border-color:white}
+.mob-cart-btn{
+  flex:1;padding:11px 16px;border-radius:50px;
+  background:var(--tomato);border:none;
+  color:white;font-weight:800;font-family:'Raleway',sans-serif;
+  font-size:14px;cursor:pointer;transition:all .3s;
+}
+.mob-cart-btn:hover{background:var(--tomato-dark);box-shadow:0 0 16px rgba(255,99,71,.4)}
+
+/* ─── HERO SLIDER ─── */
+.hero {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px);
+  height: calc(100dvh - 80px);
+  min-height: 600px;
+  overflow: hidden;
+  margin-top: 80px;
+}
+.slide{
+  position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;
+  background-size:cover;background-position:center center;background-repeat:no-repeat;
+  will-change:opacity;
+}
+.slide.active{opacity:1;z-index:1}
+.slide::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.10) 0%,rgba(0,0,0,.04) 35%,rgba(0,0,0,.38) 100%);
+}
+
+.hero-cta{
+  position:absolute;bottom:80px;left:50%;transform:translateX(-50%);
+  display:flex;gap:16px;z-index:10;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp .7s .2s ease both;
+}
+.slider-dots{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;z-index:10;
+}
+.dot{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(255,255,255,.4);border:2px solid rgba(255,255,255,.6);
+  cursor:pointer;transition:all .3s;
+}
+.dot.active{background:var(--tomato);border-color:var(--tomato);transform:scale(1.2);box-shadow:0 0 10px var(--tomato)}
+.slider-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:10;
+  width:50px;height:50px;border-radius:50%;
+  background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);
+  color:white;font-size:22px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(10px);transition:all .3s;user-select:none;
+}
+.slider-arrow:hover{background:var(--tomato);border-color:var(--tomato);box-shadow:0 0 20px rgba(255,99,71,.5)}
+.slider-arrow.prev{left:20px}
+.slider-arrow.next{right:20px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px) translateX(-50%)}to{opacity:1;transform:translateY(0) translateX(-50%)}}
+@keyframes fadeUpSimple{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── BUTTONS ─── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--tomato);color:white;border:none;
+  padding:15px 34px;border-radius:50px;font-size:16px;font-weight:800;
+  font-family:'Raleway',sans-serif;cursor:pointer;text-decoration:none;
+  box-shadow:0 6px 24px rgba(255,99,71,.4);transition:all .3s;
+  letter-spacing:.3px;position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--neon-cyan),var(--neon-green));
+  opacity:0;transition:opacity .35s;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 24px var(--neon-cyan),0 0 48px rgba(0,245,255,.25);}
+.btn-primary:hover::before{opacity:1}
+.btn-primary span{position:relative;z-index:1;color:inherit}
+.btn-outline{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.15);color:white;
+  border:2px solid rgba(255,255,255,.5);
+  padding:14px 30px;border-radius:50px;font-size:16px;font-weight:700;
+  font-family:'Raleway',sans-serif;cursor:pointer;text-decoration:none;
+  backdrop-filter:blur(10px);transition:all .3s;
+}
+.btn-outline:hover{background:rgba(255,255,255,.25);border-color:var(--neon-cyan);box-shadow:0 0 20px rgba(0,245,255,.3);transform:translateY(-2px);}
+
+/* ─── MARQUEE ─── */
+.marquee{background:linear-gradient(90deg,var(--blue) 0%,var(--tomato) 100%);padding:18px 0;overflow:hidden;}
+.marquee-inner{display:flex;width:max-content;animation:scroll 28s linear infinite}
+.marquee-item{display:flex;align-items:center;gap:10px;padding:0 32px;color:rgba(255,255,255,.9);font-size:15px;font-weight:700;font-family:'Raleway',sans-serif;white-space:nowrap;letter-spacing:.3px;}
+.m-dot{width:6px;height:6px;background:var(--gold-light);border-radius:50%;flex-shrink:0}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─── SECTIONS ─── */
+section{padding:90px 4%}
+.container{max-width:1280px;margin:0 auto}
+.sec-label{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:var(--tomato);margin-bottom:12px;font-family:'Raleway',sans-serif;}
+.sec-label::before{content:'';width:28px;height:3px;background:linear-gradient(90deg,var(--tomato),var(--blue-light));border-radius:2px}
+.sec-title{font-size:clamp(30px,4vw,52px);font-weight:900;line-height:1.1;margin-bottom:14px;}
+.sec-title .t{color:var(--tomato)}
+.sec-title .b{color:var(--blue)}
+.sec-sub{font-size:17px;color:var(--text-mid);line-height:1.7;max-width:580px;margin-bottom:50px;font-weight:500}
+.center{text-align:center}
+.center .sec-sub{margin-left:auto;margin-right:auto}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.vis{opacity:1;transform:none}
+.r1{transition-delay:.1s}.r2{transition-delay:.18s}.r3{transition-delay:.26s}.r4{transition-delay:.34s}
+
+/* ─── CATEGORIES ─── */
+.cats{background:white;padding:90px 4%}
+.cats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto}
+.cat-card{position:relative;height:440px;border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;box-shadow:var(--shadow);transition:all .4s ease;}
+.cat-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.cat-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.cat-card:hover .cat-img{transform:scale(1.07)}
+.cat-overlay{position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(10,15,40,.72) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px;transition:background .4s;}
+.cat-card:hover .cat-overlay{background:linear-gradient(transparent 10%,rgba(10,15,40,.85) 100%)}
+.cat-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);padding:5px 14px;border-radius:50px;color:white;font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:10px;width:fit-content;font-family:'Raleway',sans-serif;}
+.cat-title{font-size:28px;font-weight:900;color:white;margin-bottom:8px;font-family:'Bebas Neue',sans-serif;letter-spacing:1px}
+.cat-desc{font-size:14px;color:rgba(255,255,255,.8);line-height:1.5;margin-bottom:16px;max-height:0;overflow:hidden;transition:max-height .4s ease;font-weight:600;}
+.cat-card:hover .cat-desc{max-height:60px}
+.cat-link{display:inline-flex;align-items:center;gap:8px;color:var(--gold-light);font-weight:800;font-size:15px;text-decoration:none;font-family:'Raleway',sans-serif;transition:gap .3s,color .3s;}
+.cat-link:hover{gap:14px;color:var(--neon-cyan)}
+.cat-count{position:absolute;top:20px;right:20px;background:var(--tomato);color:white;padding:5px 14px;border-radius:50px;font-size:12px;font-weight:800;font-family:'Raleway',sans-serif;box-shadow:0 4px 14px rgba(255,99,71,.4);}
+
+/* ─── WHY US ─── */
+.why{background:linear-gradient(135deg,var(--blue-pale) 0%,#FFF5F3 100%);padding:90px 4%}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;max-width:1200px;margin:0 auto;align-items:center}
+.why-features{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+.why-card{background:white;border-radius:var(--radius);padding:26px 22px;border:1px solid rgba(0,0,0,.06);transition:all .3s;position:relative;overflow:hidden;}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--tomato),var(--blue-light));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.why-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.why-card:hover::before{transform:scaleX(1)}
+.why-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:14px;}
+.ic-t{background:rgba(255,99,71,.1)}.ic-b{background:var(--blue-pale)}.ic-g{background:rgba(201,168,76,.1)}.ic-n{background:#f0fff4}
+.why-card h3{font-size:16px;font-weight:800;margin-bottom:6px;font-family:'Raleway',sans-serif}
+.why-card p{font-size:14px;color:var(--text-mid);line-height:1.6;font-weight:500}
+.why-visual{position:relative}
+.why-img-wrap{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);position:relative}
+.why-img-wrap img{width:100%;height:420px;object-fit:cover;display:block}
+.why-badge{position:absolute;bottom:-20px;right:-20px;background:white;border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow-lg);text-align:center;border-top:4px solid var(--tomato);}
+.why-badge-num{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--tomato);letter-spacing:1px;line-height:1}
+.why-badge-lbl{font-size:12px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:.8px;font-family:'Raleway',sans-serif}
+
+/* ─── PRODUCTS ─── */
+.products{background:var(--cream);padding:90px 4%}
+.prod-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:44px}
+.tab{padding:10px 24px;border-radius:50px;border:2px solid rgba(255,99,71,.25);background:white;font-family:'Raleway',sans-serif;font-size:14px;font-weight:800;color:var(--text-mid);cursor:pointer;transition:all .3s;letter-spacing:.3px;}
+.tab:hover,.tab.on{background:var(--tomato);color:white;border-color:var(--tomato);box-shadow:0 4px 20px rgba(255,99,71,.35);}
+.tab:hover{box-shadow:0 0 16px var(--neon-cyan),0 4px 20px rgba(255,99,71,.3)}
+.prods-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;max-width:1300px;margin:0 auto}
+.prod-card{background:white;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(0,0,0,.07);transition:all .35s;cursor:pointer;position:relative;}
+.prod-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(255,99,71,.25)}
+.prod-img-wrap{position:relative;height:210px;overflow:hidden}
+.prod-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease;}
+.prod-card:hover .prod-img-wrap img{transform:scale(1.07)}
+.prod-badge{position:absolute;top:12px;left:12px;padding:4px 12px;border-radius:50px;font-size:11px;font-weight:800;letter-spacing:.5px;font-family:'Raleway',sans-serif;}
+.b-red{background:var(--tomato);color:white}.b-blue{background:var(--blue);color:white}.b-gold{background:var(--gold);color:white}.b-green{background:#16a34a;color:white}
+.prod-wish{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12);transition:all .3s;}
+.prod-wish:hover{transform:scale(1.15);box-shadow:0 4px 16px rgba(255,99,71,.25)}
+.prod-info{padding:16px}
+.prod-cat{font-size:11px;font-weight:800;color:var(--tomato);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;font-family:'Raleway',sans-serif}
+.prod-name{font-size:14px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:6px}
+.prod-stars{font-size:12px;color:var(--gold);font-weight:700;margin-bottom:10px}
+.prod-stars span{color:var(--text-light);font-weight:500}
+.prod-foot{display:flex;align-items:center;justify-content:space-between}
+.prod-price{font-size:18px;font-weight:900;color:var(--text);font-family:'Raleway',sans-serif}
+.prod-old{font-size:13px;color:var(--text-light);text-decoration:line-through;margin-left:6px;font-weight:500}
+.add-btn{width:36px;height:36px;border-radius:50%;border:none;background:var(--tomato);color:white;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;box-shadow:0 4px 14px rgba(255,99,71,.3);line-height:1;font-weight:800;}
+.add-btn:hover{background:var(--blue);transform:scale(1.12);box-shadow:0 0 16px var(--neon-cyan)}
+.prods-more{text-align:center;margin-top:44px}
+
+/* ─── LIFESTYLE MOSAIC ─── */
+.lifestyle{background:var(--sand);padding:90px 4%}
+.mosaic{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:280px 280px;gap:16px;max-width:1280px;margin:0 auto;border-radius:var(--radius-lg);overflow:hidden;}
+.mos{position:relative;overflow:hidden;cursor:pointer}
+.mos.big{grid-row:span 2}
+.mos img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.mos:hover img{transform:scale(1.07)}
+.mos-over{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(10,15,40,.68) 100%);display:flex;align-items:flex-end;padding:20px;transition:background .4s;}
+.mos:hover .mos-over{background:linear-gradient(transparent 20%,rgba(10,15,40,.82) 100%)}
+.mos-lbl{color:white;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.8px;display:flex;flex-direction:column;gap:2px;line-height:1.2;}
+.mos.big .mos-lbl{font-size:28px}
+.mos-lbl span{font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;color:rgba(255,255,255,.72);letter-spacing:0}
+
+/* ─── TESTIMONIALS ─── */
+.testi{position:relative;padding:90px 4%;overflow:hidden;background:#0F1828;}
+.testi::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1800&q=80') center/cover no-repeat;opacity:.18;}
+.testi::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,24,40,.95) 0%,rgba(26,79,160,.55) 50%,rgba(15,24,40,.92) 100%);}
+.testi .container{position:relative;z-index:1}
+.testi .sec-label{color:var(--gold-light)}
+.testi .sec-title{color:white}
+.testi .sec-sub{color:rgba(255,255,255,.65)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto}
+.tc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(12px);border-radius:var(--radius-lg);padding:30px 28px;transition:all .4s;position:relative;}
+.tc:hover{background:rgba(255,255,255,.1);border-color:rgba(255,99,71,.35);transform:translateY(-6px);box-shadow:0 16px 48px rgba(0,0,0,.3);}
+.tc-stars{color:var(--gold-light);font-size:18px;letter-spacing:2px;margin-bottom:14px}
+.tc-text{font-size:15px;color:rgba(255,255,255,.82);line-height:1.75;margin-bottom:22px;font-weight:500;}
+.tc-auth{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.tc-av{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;border:3px solid rgba(255,99,71,.4);box-shadow:0 4px 16px rgba(0,0,0,.25);}
+.tc-av img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.tc-name{font-weight:800;font-size:15px;color:white;font-family:'Raleway',sans-serif}
+.tc-meta{font-size:12px;color:rgba(255,255,255,.45);font-weight:600;margin-top:2px}
+.tc-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:800;font-family:'Raleway',sans-serif;letter-spacing:.4px;}
+
+/* ─── CONTACT ─── */
+.contact{position:relative;padding:90px 4%;overflow:hidden;}
+.contact::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1524293581917-878a6d017c71?w=1800&q=80') center/cover no-repeat;opacity:.07;}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:52px;max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.cinfo{display:flex;flex-direction:column;gap:22px}
+.ci{display:flex;align-items:flex-start;gap:16px}
+.ci-icon{width:50px;height:50px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.cit{background:rgba(255,99,71,.12)}.cib{background:var(--blue-pale)}.cig{background:rgba(201,168,76,.12)}.cin{background:#f0fff4}
+.ci-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text-light);font-family:'Raleway',sans-serif}
+.ci-val{font-size:16px;font-weight:800;color:var(--text);margin:2px 0;font-family:'Raleway',sans-serif}
+.ci-sub{font-size:13px;color:var(--text-light);font-weight:500}
+.map-wrap{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);height:100%;min-height:360px}
+.map-wrap iframe{width:100%;height:100%;border:none;min-height:360px}
+
+/* ─── NEWSLETTER ─── */
+.nl{position:relative;padding:80px 4%;overflow:hidden;}
+.nl::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=1800&q=80') center/cover no-repeat;}
+.nl::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,24,40,.92) 0%,rgba(26,79,160,.78) 50%,rgba(13,48,96,.92) 100%);}
+.nl-inner{max-width:680px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.nl-inner h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,5vw,62px);color:white;letter-spacing:2px;margin-bottom:10px;}
+.nl-inner h2 span{color:var(--tomato)}
+.nl-inner p{font-size:17px;color:rgba(255,255,255,.75);margin-bottom:32px;font-weight:600}
+.nl-form{display:flex;gap:10px;max-width:480px;margin:0 auto}
+.nl-input{flex:1;padding:15px 22px;border-radius:50px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.12);color:white;font-size:15px;font-family:'Nunito',sans-serif;outline:none;backdrop-filter:blur(10px);transition:border-color .3s;font-weight:600;}
+.nl-input::placeholder{color:rgba(255,255,255,.5)}
+.nl-input:focus{border-color:var(--neon-cyan);box-shadow:0 0 16px rgba(0,245,255,.2)}
+.nl-btn{padding:15px 30px;border-radius:50px;border:none;background:var(--tomato);color:white;font-size:15px;font-weight:800;font-family:'Raleway',sans-serif;cursor:pointer;white-space:nowrap;transition:all .3s;box-shadow:0 4px 16px rgba(255,99,71,.4);}
+.nl-btn:hover{background:var(--tomato-dark);box-shadow:0 0 24px var(--neon-cyan),0 0 48px rgba(0,245,255,.2);transform:translateY(-2px);}
+.nl-perks{display:flex;gap:20px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.nl-perk{color:rgba(255,255,255,.65);font-size:13px;display:flex;align-items:center;gap:6px;font-weight:600}
+.nl-perk .ck{color:#4ade80;font-size:14px}
+
+/* ─── FOOTER ─── */
+.footer{background:#000;padding:64px 4% 36px;color:rgba(255,255,255,.6)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;max-width:1280px;margin:0 auto;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.07)}
+.footer-logo{height:58px;width:auto;object-fit:contain;margin-bottom:18px;filter:brightness(0.95)}
+.footer-brand p{font-size:15px;line-height:1.7;color:rgba(255,255,255,.45);margin-bottom:24px;font-weight:500}
+.socials{display:flex;gap:10px}
+.sc{width:38px;height:38px;border-radius:9px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);cursor:pointer;transition:all .3s;text-decoration:none;font-size:15px;font-weight:700;font-family:'Raleway',sans-serif;}
+.sc:hover{background:var(--tomato);border-color:var(--tomato);color:white;transform:translateY(-3px)}
+.footer-col h4{font-size:13px;font-weight:900;color:white;margin-bottom:18px;text-transform:uppercase;letter-spacing:1.2px;font-family:'Raleway',sans-serif}
+.fl{list-style:none;display:flex;flex-direction:column;gap:9px}
+.fl a{color:rgba(255,255,255,.45);text-decoration:none;font-size:14px;font-weight:500;transition:all .3s;display:flex;align-items:center;gap:5px}
+.fl a:hover{color:var(--tomato-light);transform:translateX(4px)}
+.footer-bot{max-width:1280px;margin:28px auto 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.3);font-weight:500}
+.footer-leg{display:flex;gap:18px}
+.footer-leg a{font-size:13px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .3s;font-weight:500}
+.footer-leg a:hover{color:var(--tomato-light)}
+
+/* ─── FLOATING BUTTONS ─── */
+.floaters{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
+.float-btn{display:flex;align-items:center;gap:10px;cursor:pointer;border-radius:50px;padding:12px 18px 12px 14px;box-shadow:0 6px 28px rgba(0,0,0,.18);transition:all .35s;position:relative;overflow:visible;}
+.float-btn .fb-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px;}
+.float-btn .fb-text{font-size:13px;font-weight:800;white-space:nowrap;font-family:'Raleway',sans-serif;max-width:0;overflow:hidden;transition:max-width .4s ease,opacity .4s ease;opacity:0;}
+.float-btn:hover .fb-text{max-width:180px;opacity:1}
+.ct-btn{background:linear-gradient(135deg,var(--tomato),var(--tomato-dark))}
+.ct-btn .fb-icon{background:rgba(255,255,255,.2);font-size:20px;color:white}
+.ct-btn .fb-text{color:white}
+.ct-btn:hover{box-shadow:0 0 24px rgba(255,99,71,.5),0 6px 28px rgba(0,0,0,.15)}
+.wa-btn{background:linear-gradient(135deg,#25D366,#128C7E)}
+.wa-btn .fb-icon{background:rgba(255,255,255,.2);font-size:22px;color:white}
+.wa-btn .fb-text{color:white}
+.wa-btn:hover{box-shadow:0 0 24px rgba(37,211,102,.5),0 6px 28px rgba(0,0,0,.15)}
+.wa-pulse{position:absolute;top:-4px;right:-4px;width:52px;height:52px;border-radius:50%;border:3px solid rgba(37,211,102,.4);animation:waPulse 2s ease infinite;pointer-events:none;}
+@keyframes waPulse{0%{transform:scale(1);opacity:1}100%{transform:scale(1.6);opacity:0}}
+.float-btn svg{width:24px;height:24px}
+
+/* ─── BACK TO TOP ─── */
+.btt{position:fixed;bottom:28px;left:28px;z-index:9999;width:50px;height:50px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--tomato),var(--tomato-dark));color:white;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(255,99,71,.4);opacity:0;pointer-events:none;transition:all .35s;}
+.btt.vis{opacity:1;pointer-events:auto}
+.btt:hover{transform:translateY(-4px);box-shadow:0 0 22px var(--neon-cyan),0 6px 24px rgba(255,99,71,.35);}
+
+/* ─── CART DRAWER ─── */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9998;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-drawer{position:fixed;top:0;right:-420px;width:420px;max-width:100vw;height:100vh;background:white;z-index:9999;box-shadow:-8px 0 48px rgba(0,0,0,.18);display:flex;flex-direction:column;transition:right .4s cubic-bezier(.4,0,.2,1);overflow:hidden;}
+.cart-drawer.open{right:0}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:2px solid #f0f0f0;background:white;}
+.cart-head h3{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;color:var(--text);display:flex;align-items:center;gap:10px;}
+.cart-close{width:36px;height:36px;border-radius:50%;border:none;background:#f5f5f5;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.cart-close:hover{background:var(--tomato);color:white}
+.cart-body{flex:1;overflow-y:auto;padding:20px 24px}
+.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:14px;color:var(--text-light);}
+.cart-empty-icon{font-size:52px;opacity:.4}
+.cart-empty p{font-size:15px;font-weight:600;font-family:'Raleway',sans-serif}
+.cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f5f5f5;align-items:center;}
+.cart-item-img{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1px solid #f0f0f0;flex-shrink:0;}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:13px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:4px}
+.cart-item-price{font-size:15px;font-weight:900;color:var(--tomato);font-family:'Raleway',sans-serif}
+.cart-item-remove{width:28px;height:28px;border-radius:50%;border:none;background:#fff0ee;color:var(--tomato);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .3s;flex-shrink:0;}
+.cart-item-remove:hover{background:var(--tomato);color:white}
+.cart-foot{padding:20px 24px;border-top:2px solid #f0f0f0;background:white;}
+.cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.cart-total span:first-child{font-size:16px;font-weight:700;color:var(--text-mid);font-family:'Raleway',sans-serif}
+.cart-total span:last-child{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text);letter-spacing:1px}
+.cart-checkout{width:100%;padding:16px;border-radius:50px;border:none;background:var(--tomato);color:white;font-size:16px;font-weight:800;font-family:'Raleway',sans-serif;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px rgba(255,99,71,.35);letter-spacing:.3px;}
+.cart-checkout:hover{background:var(--tomato-dark);box-shadow:0 0 20px var(--neon-cyan),0 6px 20px rgba(255,99,71,.3);transform:translateY(-2px);}
+
+/* ─── LOGIN MODAL ─── */
+.login-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:10000;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-overlay.open{opacity:1;pointer-events:auto}
+.login-modal{background:white;border-radius:24px;padding:48px 44px;width:100%;max-width:420px;box-shadow:0 30px 80px rgba(0,0,0,.25);transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s;opacity:0;position:relative;}
+.login-overlay.open .login-modal{transform:none;opacity:1}
+.login-modal-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;border:none;background:#f5f5f5;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .3s;color:var(--text-mid);}
+.login-modal-close:hover{background:var(--tomato);color:white}
+.login-modal-logo{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--tomato),var(--tomato-dark));display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 8px 24px rgba(255,99,71,.35);}
+.login-modal h3{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;text-align:center;color:var(--text);margin-bottom:6px;}
+.login-modal .lm-sub{text-align:center;font-size:14px;color:var(--text-light);font-weight:600;margin-bottom:28px;}
+.lm-tabs{display:flex;background:#f5f5f5;border-radius:12px;padding:4px;margin-bottom:24px;gap:4px;}
+.lm-tab{flex:1;padding:9px;border-radius:9px;border:none;background:transparent;font-family:'Raleway',sans-serif;font-size:14px;font-weight:700;color:var(--text-mid);cursor:pointer;transition:all .25s;}
+.lm-tab.active{background:white;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.lm-field{margin-bottom:16px;}
+.lm-field label{display:block;font-size:12px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;font-family:'Raleway',sans-serif;}
+.lm-field input{width:100%;padding:13px 16px;border-radius:12px;border:1.5px solid #e8e8e8;background:#fafafa;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;color:var(--text);outline:none;transition:all .3s;}
+.lm-field input:focus{border-color:var(--tomato);background:white;box-shadow:0 0 0 3px rgba(255,99,71,.1)}
+.lm-submit{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--tomato),var(--tomato-dark));color:white;font-size:15px;font-weight:800;font-family:'Raleway',sans-serif;cursor:pointer;box-shadow:0 6px 20px rgba(255,99,71,.4);transition:all .3s;margin-top:8px;letter-spacing:.3px;}
+.lm-submit:hover{transform:translateY(-2px);box-shadow:0 0 24px var(--neon-cyan),0 8px 20px rgba(255,99,71,.35)}
+.lm-divider{display:flex;align-items:center;gap:12px;margin:20px 0;}
+.lm-divider::before,.lm-divider::after{content:'';flex:1;height:1px;background:#eee;}
+.lm-divider span{font-size:12px;color:var(--text-light);font-weight:700;letter-spacing:.5px}
+.lm-social{display:flex;gap:10px}
+.lm-soc-btn{flex:1;padding:11px;border-radius:12px;border:1.5px solid #e8e8e8;background:white;font-size:14px;font-weight:700;font-family:'Raleway',sans-serif;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--text);}
+.lm-soc-btn:hover{border-color:var(--tomato);background:#fff5f3;box-shadow:0 4px 14px rgba(255,99,71,.12)}
+.lm-foot{text-align:center;font-size:13px;color:var(--text-light);margin-top:20px;font-weight:600}
+.lm-foot a{color:var(--tomato);text-decoration:none;font-weight:700}
+.lm-foot a:hover{text-decoration:underline}
+.lm-panel{display:none}
+.lm-panel.active{display:block}
+
+@media(max-width:1100px){
+  .prods-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .cats-grid{grid-template-columns:1fr 1fr}
+  .why-grid{grid-template-columns:1fr}
+  .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .mos.big{grid-row:span 1;height:260px}
+  .mos{height:200px}
+  .testi-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:900px){
+  .nav-login-btn{padding:8px 12px;font-size:12px;gap:5px}
+}
+@media(max-width:768px){
+  .nav{grid-template-columns:auto auto}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .nav-search-wrap{display:none}
+  .nav-cart-btn{display:none}
+  .nav-login-btn{display:none}
+  .prods-grid{grid-template-columns:repeat(2,1fr)}
+  .cats-grid{grid-template-columns:1fr}
+  .cats-grid .cat-card{height:320px}
+  .footer-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr}
+  .why-features{grid-template-columns:1fr}
+  .mosaic{grid-template-columns:1fr}
+  .mos.big,.mos{height:220px}
+  section{padding:64px 4%}
+  .slider-arrow{display:none}
+  .nl-form{flex-direction:column}
+  .cart-drawer{width:100vw}
+  .hero-cta{flex-direction:column;align-items:center}
+  .login-modal{padding:36px 26px}
+}
+@media(max-width:480px){
+  .prods-grid{grid-template-columns:1fr}
+  .floaters{right:14px;bottom:14px}
+  .float-btn{padding:10px 12px}
+  .btt{left:14px;bottom:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-logo">
+    <img src="https://i.ibb.co.com/wNmWWhJW/IMG-9975.jpg" loading="eager">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#cats">Shop</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#lifestyle">Lifestyle</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#products" class="nav-cta">Shop Now →</a></li>
+  </ul>
+  <div class="nav-actions">
+    <div class="nav-search-wrap" id="navSearchWrap">
+      <button class="nav-search-btn" onclick="toggleSearch()" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </button>
+      <input class="nav-search-input" id="navSearchInput" type="text" placeholder="Search products…" onkeydown="if(event.key==='Escape')closeSearch()">
+    </div>
+    <button class="nav-cart-btn" onclick="openCart()" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="nav-cart-badge" id="navCartBadge">0</span>
+    </button>
+    <a href="#" class="nav-login-btn" onclick="openLogin(event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="14" height="14"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Login
+    </a>
+    <div class="hamburger" id="ham" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-search-bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+    <input type="text" placeholder="Search products…">
+  </div>
+  <a href="#" onclick="toggleMenu()">🏠 Home</a>
+  <a href="#cats" onclick="toggleMenu()">🛒 Shop Categories</a>
+  <a href="#products" onclick="toggleMenu()">📦 Products</a>
+  <a href="#why" onclick="toggleMenu()">⭐ Why Us</a>
+  <a href="#lifestyle" onclick="toggleMenu()">🗺️ Lifestyle</a>
+  <a href="#contact" onclick="toggleMenu()">📞 Contact</a>
+  <div class="mobile-menu-actions">
+    <button class="mob-login-btn" onclick="openLogin(event);toggleMenu()">👤 Login / Register</button>
+    <button class="mob-cart-btn" onclick="openCart();toggleMenu()">🛒 View Cart</button>
+  </div>
+</div>
+
+<!-- HERO SLIDER -->
+<section class="hero" id="hero">
+  <!-- FIX: only first slide has 'active' -->
+  <div class="slide active" style="background-image:url('img/hero 1.png')"></div>
+  <div class="slide" style="background-image:url('img/hero 2.png')"></div>
+  <div class="slide" style="background-image:url('img/hero 3.png')"></div>
+  <div class="slide" style="background-image:url('img/hero 4.png')"></div>
+  <div class="slide" style="background-image:url('img/hero 5.png')"></div>
+  <div class="hero-cta">
+    <a href="#products" class="btn-primary"><span>Shop Now</span><span>→</span></a>
+    <a href="#cats" class="btn-outline">Explore Categories</a>
+  </div>
+  <button class="slider-arrow prev" onclick="changeSlide(-1)">‹</button>
+  <button class="slider-arrow next" onclick="changeSlide(1)">›</button>
+  <div class="slider-dots" id="sliderDots">
+    <div class="dot active" onclick="goSlide(0)"></div>
+    <div class="dot" onclick="goSlide(1)"></div>
+    <div class="dot" onclick="goSlide(2)"></div>
+    <div class="dot" onclick="goSlide(3)"></div>
+    <div class="dot" onclick="goSlide(4)"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-inner">
+    <div class="marquee-item"><span class="m-dot"></span> Free Shipping Australia-Wide</div>
+    <div class="marquee-item"><span class="m-dot"></span> 5,000+ Premium Travel Products</div>
+    <div class="marquee-item"><span class="m-dot"></span> Trusted by 50,000+ Travellers</div>
+    <div class="marquee-item"><span class="m-dot"></span> Cruise · Fly · Caravan Essentials</div>
+    <div class="marquee-item"><span class="m-dot"></span> 30-Day Hassle-Free Returns</div>
+    <div class="marquee-item"><span class="m-dot"></span> Expert Travel Specialists 7 Days</div>
+    <div class="marquee-item"><span class="m-dot"></span> Free Shipping Australia-Wide</div>
+    <div class="marquee-item"><span class="m-dot"></span> 5,000+ Premium Travel Products</div>
+    <div class="marquee-item"><span class="m-dot"></span> Trusted by 50,000+ Travellers</div>
+    <div class="marquee-item"><span class="m-dot"></span> Cruise · Fly · Caravan Essentials</div>
+    <div class="marquee-item"><span class="m-dot"></span> 30-Day Hassle-Free Returns</div>
+    <div class="marquee-item"><span class="m-dot"></span> Expert Travel Specialists 7 Days</div>
+  </div>
+</div>
+
+<!-- SHOP BY CATEGORY -->
+<section class="cats" id="cats">
+  <div class="container">
+    <div class="center reveal">
+      <div class="sec-label">Shop by Category</div>
+      <h2 class="sec-title">Your <span class="t">Travel,</span> <span class="b">Your Way</span></h2>
+      <p class="sec-sub">Expertly curated essentials for every type of Australian traveller — ocean voyages to outback adventures.</p>
+    </div>
+    <div class="cats-grid">
+      <div class="cat-card reveal r1">
+        <img class="cat-img" src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=800&q=80" alt="Cruise Essentials" loading="lazy">
+        <div class="cat-overlay">
+          <div>
+            <div class="cat-tag">⛵ Ocean Adventures</div>
+            <h3 class="cat-title">Cruise Essentials</h3>
+            <p class="cat-desc">Everything you need for the perfect cruise holiday — cabin organisers to deck comfort.</p>
+            <a href="#" class="cat-link">Shop Cruise →</a>
+          </div>
+        </div>
+        <div class="cat-count">240+ Products</div>
+      </div>
+      <div class="cat-card reveal r2">
+        <img class="cat-img" src="https://media.licdn.com/dms/image/v2/D4D12AQEzfWihHmeXiA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1693557404472?e=2147483647&v=beta&t=5dgmI5TdNFrSioYFqteFLpt1qi4NdVfP6CCec5h88Cc" alt="Flight Comfort" loading="lazy">
+        <div class="cat-overlay">
+          <div>
+            <div class="cat-tag">✈️ Sky High Comfort</div>
+            <h3 class="cat-title">Flight Comfort</h3>
+            <p class="cat-desc">Premium pillows, organisers, noise-cancelling solutions and in-flight comforts.</p>
+            <a href="#" class="cat-link">Shop Flying →</a>
+          </div>
+        </div>
+        <div class="cat-count">180+ Products</div>
+      </div>
+      <div class="cat-card reveal r3">
+        <img class="cat-img" src="https://www.caravanland.com.au/sites/10/2024/12/31-sm-1733275938-932x524.jpg" alt="Caravan & Motorhome" loading="lazy">
+        <div class="cat-overlay">
+          <div>
+            <div class="cat-tag">🚐 Open Road Freedom</div>
+            <h3 class="cat-title">Caravan & Motorhome</h3>
+            <p class="cat-desc">Gear up for Australia's stunning outback and coastal drives with our road-trip collection.</p>
+            <a href="#" class="cat-link">Shop Caravaning →</a>
+          </div>
+        </div>
+        <div class="cat-count">320+ Products</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY TRAVEL NEEDS -->
+<section class="why" id="why">
+  <div class="why-grid container">
+    <div>
+      <div class="sec-label reveal">Why Travel Needs</div>
+      <h2 class="sec-title reveal">Australia's Most <span class="t">Trusted</span><br><span class="b">Travel Store</span></h2>
+      <p class="sec-sub reveal">We're passionate travellers ourselves. Every product is personally tested and curated so your journey is as smooth as possible.</p>
+      <div class="why-features">
+        <div class="why-card reveal r1"><div class="why-icon ic-t">🚀</div><h3>Fast AU Shipping</h3><p>Express delivery across all of Australia. Free shipping on orders over $50.</p></div>
+        <div class="why-card reveal r2"><div class="why-icon ic-b">⭐</div><h3>Curated Products</h3><p>Every item is hand-picked and tested by our travel experts. No filler, only the best.</p></div>
+        <div class="why-card reveal r3"><div class="why-icon ic-g">🛡️</div><h3>30-Day Returns</h3><p>Not satisfied? Send it back within 30 days, no questions asked.</p></div>
+        <div class="why-card reveal r4"><div class="why-icon ic-n">💬</div><h3>Expert Support</h3><p>Our travel-savvy team is available 7 days a week to help you find perfect gear.</p></div>
+      </div>
+    </div>
+    <div class="why-visual reveal">
+      <div class="why-img-wrap">
+        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=900&q=80" alt="Travel Lifestyle" loading="lazy">
+      </div>
+      <div class="why-badge">
+        <div class="why-badge-num">4.9★</div>
+        <div class="why-badge-lbl">12,400+ Reviews</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="container">
+    <div class="center reveal">
+      <div class="sec-label">Shop Now</div>
+      <h2 class="sec-title">Featured <span class="t">Products</span></h2>
+      <p class="sec-sub">Handpicked essentials loved by thousands of Australian travellers.</p>
+    </div>
+    <div class="prod-tabs reveal">
+      <button class="tab on" onclick="filterProds(this,'all')">All Products</button>
+      <button class="tab" onclick="filterProds(this,'cruise')">Cruise ⛵</button>
+      <button class="tab" onclick="filterProds(this,'fly')">Flying ✈️</button>
+      <button class="tab" onclick="filterProds(this,'caravan')">Caravan 🚐</button>
+    </div>
+    <div class="prods-grid" id="prodsGrid">
+      <div class="prod-card reveal r1" data-cat="cruise">
+        <div class="prod-img-wrap"><img src="https://i.ibb.co.com/CpL2fsVD/IMG-9110.jpg" alt="Cabin Organiser" loading="lazy"><span class="prod-badge b-red">Best Seller</span><div class="prod-wish" onclick="toggleWish(this)">🤍</div></div>
+        <div class="prod-info"><div class="prod-cat">Cruise Essentials</div><div class="prod-name">Ultimate Cabin Organiser Kit</div><div class="prod-stars">★★★★★ <span>(1,204)</span></div><div class="prod-foot"><div><span class="prod-price">$49.95</span><span class="prod-old">$69</span></div><button class="add-btn" onclick="addCart(this,'Ultimate Cabin Organiser Kit','$49.95','https://i.ibb.co.com/CpL2fsVD/IMG-9110.jpg')">+</button></div></div>
+      </div>
+      <div class="prod-card reveal r2" data-cat="fly">
+        <div class="prod-img-wrap"><img src="https://primepick.co.in/cdn/shop/files/121.jpg?v=1765802774" alt="Neck Pillow" loading="lazy"><span class="prod-badge b-blue">Top Rated</span><div class="prod-wish" onclick="toggleWish(this)">🤍</div></div>
+        <div class="prod-info"><div class="prod-cat">Flight Comfort</div><div class="prod-name">Memory Foam Travel Neck Pillow</div><div class="prod-stars">★★★★★ <span>(2,847)</span></div><div class="prod-foot"><div><span class="prod-price">$34.95</span><span class="prod-old">$55</span></div><button class="add-btn" onclick="addCart(this,'Memory Foam Neck Pillow','$34.95','https://images.unsplash.com/photo-1559085189-93abb3dab2c8?w=80')">+</button></div></div>
+      </div>
+      <div class="prod-card reveal r3" data-cat="caravan">
+        <div class="prod-img-wrap"><img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80" alt="Solar Lantern" loading="lazy"><span class="prod-badge b-green">Eco</span><div class="prod-wish" onclick="toggleWish(this)">🤍</div></div>
+        <div class="prod-info"><div class="prod-cat">Caravan & Motorhome</div><div class="prod-name">Solar LED Collapsible Camp Lantern</div><div class="prod-stars">★★★★★ <span>(689)</span></div><div class="prod-foot"><div><span class="prod-price">$31.95</span><span class="prod-old">$48</span></div><button class="add-btn" onclick="addCart(this,'Solar Camp Lantern','$31.95','https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=80')">+</button></div></div>
+      </div>
+      <div class="prod-card reveal r4" data-cat="cruise">
+        <div class="prod-img-wrap"><img src="https://i.ibb.co.com/ZzF2pL2v/IMG-8634.png" alt="Waterproof Bag" loading="lazy"><span class="prod-badge b-red">Best Seller</span><div class="prod-wish" onclick="toggleWish(this)">🤍</div></div>
+        <div class="prod-info"><div class="prod-cat">Cruise Essentials</div><div class="prod-name">Waterproof Dry Bag 20L Premium</div><div class="prod-stars">★★★★★ <span>(403)</span></div><div class="prod-foot"><div><span class="prod-price">$27.00</span><span class="prod-old">$39</span></div><button class="add-btn" onclick="addCart(this,'Waterproof Dry Bag 20L','$27.00','https://i.ibb.co.com/ZzF2pL2v/IMG-8634.png')">+</button></div></div>
+      </div>
+      <div class="prod-card reveal r1" data-cat="caravan">
+        <div class="prod-img-wrap"><img src="https://i.ibb.co.com/xS7hMH2W/IMG-7640.jpg" alt="Camp Chair" loading="lazy"><span class="prod-badge b-blue">New</span><div class="prod-wish" onclick="toggleWish(this)">🤍</div></div>
+        <div class="prod-info"><div class="prod-cat">Caravan & Motorhome</div><div class="prod-name">Ultralight Fold-Flat Camping Chair</div><div class="prod-stars">★★★★☆ <span>(267)</span></div><div class="prod-foot"><div><span class="prod-price">$56.95</span><span class="prod-old">$79</span></div><button class="add-btn" onclick="addCart(this,'Fold-Flat Camping Chair','$56.95','https://i.ibb.co.com/xS7hMH2W/IMG-7640.jpg')">+</button></div></div>
+      </div>
+      <div class="prod-card reveal r2" data-cat="fly">
+        <div class="prod-img-wrap"><img src="https://i.ibb.co.com/hRtNmXnb/IMG-8631.jpg" alt="Travel Wallet" loading="lazy"><span class="prod-badge b-gold">🔥 Hot</span><div class="prod-wish" onclick="toggleWish(this)">🤍</div></div>
+        <div class="prod-info"><div class="prod-cat">Flight Comfort</div><div class="prod-name">RFID Travel Wallet & Passport Holder</div><div class="prod-stars">★★★★★ <span>(891)</span></div><div class="prod-foot"><div><span class="prod-price">$22.95</span><span class="prod-old">$35</span></div><button class="add-btn" onclick="addCart(this,'RFID Travel Wallet','$22.95','https://i.ibb.co.com/hRtNmXnb/IMG-8631.jpg')">+</button></div></div>
+      </div>
+      <div class="prod-card reveal r3" data-cat="cruise">
+        <div class="prod-img-wrap"><img src="https://i.ibb.co.com/nNT6JMp0/IMG-8699.jpg" alt="Shore Pack" loading="lazy"><span class="prod-badge b-green">Eco</span><div class="prod-wish" onclick="toggleWish(this)">🤍</div></div>
+        <div class="prod-info"><div class="prod-cat">Cruise Essentials</div><div class="prod-name">Cruise Shore Excursion Day Pack</div><div class="prod-stars">★★★★★ <span>(256)</span></div><div class="prod-foot"><div><span class="prod-price">$19.95</span><span class="prod-old">$29</span></div><button class="add-btn" onclick="addCart(this,'Shore Excursion Day Pack','$19.95','https://i.ibb.co.com/nNT6JMp0/IMG-8699.jpg')">+</button></div></div>
+      </div>
+      <div class="prod-card reveal r4" data-cat="fly">
+        <div class="prod-img-wrap"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Eye Mask" loading="lazy"><span class="prod-badge b-red">Sale</span><div class="prod-wish" onclick="toggleWish(this)">🤍</div></div>
+        <div class="prod-info"><div class="prod-cat">Flight Comfort</div><div class="prod-name">Luxury Sleep Eye Mask & Earplugs Set</div><div class="prod-stars">★★★★★ <span>(1,122)</span></div><div class="prod-foot"><div><span class="prod-price">$16.95</span><span class="prod-old">$28</span></div><button class="add-btn" onclick="addCart(this,'Sleep Eye Mask Set','$16.95','https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=80')">+</button></div></div>
+      </div>
+    </div>
+    <div class="prods-more reveal">
+      <a href="#" class="btn-primary"><span>View All 5,000+ Products</span><span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- LIFESTYLE -->
+<section class="lifestyle" id="lifestyle">
+  <div class="container">
+    <div class="center reveal" style="margin-bottom:44px">
+      <div class="sec-label">The Travel Life</div>
+      <h2 class="sec-title">Live The <span class="t">Adventure</span></h2>
+      <p class="sec-sub">From golden-hour beaches to vast red desert highways — this is what Travel Needs is all about.</p>
+    </div>
+    <div class="mosaic reveal">
+      <div class="mos big"><img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=900&q=80" alt="Cruise" loading="lazy"><div class="mos-over"><div class="mos-lbl">Cruise The High Seas<span>Premium ocean travel essentials</span></div></div></div>
+      <div class="mos"><img src="https://images.squarespace-cdn.com/content/v1/5a854ee8fe54ef515949e961/3282b86c-3271-41a1-aed8-f4a7c7ea6134/re-baron-Extra-Sydney-01.jpg" alt="Fly" loading="lazy"><div class="mos-over"><div class="mos-lbl">Soar The Skies<span>Flight essentials for every journey</span></div></div></div>
+      <div class="mos"><img src="https://www.apollocamper.com/Portals/1/Adventure%20Camper_AU_Booloumba%20Creek_2292.jpg" alt="Caravan" loading="lazy"><div class="mos-over"><div class="mos-lbl">Roam Australia<span>Caravan & motorhome adventures</span></div></div></div>
+      <div class="mos"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=700&q=80" alt="Adventure" loading="lazy"><div class="mos-over"><div class="mos-lbl">Explore Freely<span>Your journey, your rules</span></div></div></div>
+      <div class="mos"><img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=700&q=80" alt="Travel" loading="lazy"><div class="mos-over"><div class="mos-lbl">Adventure Awaits<span>Everything you need inside</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi" id="testimonials">
+  <div class="container">
+    <div class="center reveal">
+      <div class="sec-label">Traveller Stories</div>
+      <h2 class="sec-title" style="color:white">Loved By <span style="color:var(--blue-light)">Adventurers</span> <span style="color:var(--tomato)">Across Australia</span></h2>
+      <p class="sec-sub">Real reviews from real travellers — your experience is everything to us.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="tc reveal r1"><div class="tc-stars">★★★★★</div><p class="tc-text">We couldn't believe the quality of the cruise cabin kit. Everything fit perfectly and the organisers made our tiny stateroom feel so much more spacious. Will never cruise without them!</p><div class="tc-auth"><div class="tc-av"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80" alt="Sarah" loading="lazy"></div><div><div class="tc-name">Sarah Mitchell</div><div class="tc-meta">Cruise Traveller · Sydney, NSW</div></div></div><div class="tc-tag" style="background:rgba(255,99,71,.18);color:var(--tomato-light)">⛵ Cruise</div></div>
+      <div class="tc reveal r2"><div class="tc-stars">★★★★★</div><p class="tc-text">The neck pillow is a total game changer on long-haul flights. I flew Sydney to London and actually slept! Plus shipping was incredibly fast. Highly recommend Travel Needs!</p><div class="tc-auth"><div class="tc-av"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt="James" loading="lazy"></div><div><div class="tc-name">James Karlson</div><div class="tc-meta">Frequent Flyer · Melbourne, VIC</div></div></div><div class="tc-tag" style="background:rgba(59,130,246,.2);color:#93c5fd">✈️ Flying</div></div>
+      <div class="tc reveal r3"><div class="tc-stars">★★★★★</div><p class="tc-text">Six months driving the east coast in our motorhome. Travel Needs gear made every night magical. The solar lantern and camp chairs are absolute must-haves!</p><div class="tc-auth"><div class="tc-av"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80" alt="Tanya" loading="lazy"></div><div><div class="tc-name">Tanya & Rob Haines</div><div class="tc-meta">Grey Nomads · Queensland</div></div></div><div class="tc-tag" style="background:rgba(22,163,74,.18);color:#4ade80">🚐 Caravan</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="center reveal" style="margin-bottom:52px">
+      <div class="sec-label">Get In Touch</div>
+      <h2 class="sec-title">We're Here to <span class="t">Help You</span> <span class="b">Travel</span></h2>
+    </div>
+    <div class="contact-layout">
+      <div class="cinfo reveal">
+        <div class="ci"><div class="ci-icon cit">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">Australia-Wide</div><div class="ci-sub">Serving all states and territories</div></div></div>
+        <div class="ci"><div class="ci-icon cib">📞</div><div><div class="ci-lbl">Phone</div><div class="ci-val">+61 (0) 400 000 000</div><div class="ci-sub">Mon–Sat, 9am–5pm AEST</div></div></div>
+        <div class="ci"><div class="ci-icon cig">📧</div><div><div class="ci-lbl">Email</div><div class="ci-val">hello@travelneeds.com.au</div><div class="ci-sub">We reply within 24 hours</div></div></div>
+        <div class="ci"><div class="ci-icon cin">💬</div><div><div class="ci-lbl">WhatsApp</div><div class="ci-val">Chat With Us Now</div><div class="ci-sub">Quick answers, 7 days a week</div></div></div>
+        <a href="mailto:hello@travelneeds.com.au" class="btn-primary" style="margin-top:8px;width:fit-content"><span>Send a Message</span><span>→</span></a>
+      </div>
+      <div class="map-wrap reveal r2">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14143640.74440065!2d130.87596395!3d-25.274398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2b2bfd076787c5df%3A0x538267a1955b1352!2sAustralia!5e0!3m2!1sen!2sau!4v1716000000000" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Travel Needs Australia"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="nl">
+  <div class="nl-inner reveal">
+    <div class="sec-label" style="color:rgba(255,255,255,.55);justify-content:center;margin-bottom:8px">Stay In The Loop</div>
+    <h2><span>Get Travel</span> Deals</h2>
+    <p>Join 50,000+ Australian travellers getting weekly deals, travel tips & exclusive member discounts.</p>
+    <div class="nl-form">
+      <input type="email" class="nl-input" placeholder="Your email address">
+      <button class="nl-btn" onclick="subscribe(this)">Subscribe →</button>
+    </div>
+    <div class="nl-perks">
+      <div class="nl-perk"><span class="ck">✓</span> Weekly travel deals</div>
+      <div class="nl-perk"><span class="ck">✓</span> Exclusive member discounts</div>
+      <div class="nl-perk"><span class="ck">✓</span> No spam, ever</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img class="footer-logo" src="https://i.ibb.co.com/wNmWWhJW/IMG-9975.jpg" alt="Travel Needs Australia" loading="lazy">
+      <p>Making every type of travel easier — whether you cruise, fly, or road-trip across Australia. Your journey starts here.</p>
+      <div class="socials">
+        <a class="sc" href="#" aria-label="Facebook">f</a>
+        <a class="sc" href="#" aria-label="Instagram">📷</a>
+        <a class="sc" href="#" aria-label="TikTok">♪</a>
+        <a class="sc" href="#" aria-label="YouTube">▶</a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul class="fl"><li><a href="#">Cruise Essentials</a></li><li><a href="#">Flight Comfort</a></li><li><a href="#">Caravan & Motorhome</a></li><li><a href="#">New Arrivals</a></li><li><a href="#">Best Sellers</a></li><li><a href="#">Sale Items</a></li></ul></div>
+    <div class="footer-col"><h4>Information</h4><ul class="fl"><li><a href="#">About Us</a></li><li><a href="#">Travel Blog</a></li><li><a href="#">Shipping Info</a></li><li><a href="#">Returns Policy</a></li><li><a href="#">Track My Order</a></li><li><a href="#">Contact Us</a></li></ul></div>
+    <div class="footer-col"><h4>Travel Guides</h4><ul class="fl"><li><a href="#">Cruise Packing List</a></li><li><a href="#">Flight Essentials Guide</a></li><li><a href="#">Caravan Setup Tips</a></li><li><a href="#">Motorhome Checklist</a></li><li><a href="#">Australia Road Trips</a></li></ul></div>
+  </div>
+  <div class="footer-bot">
+    <div class="footer-copy">© 2025 Travel Needs Australia Pty Ltd. All rights reserved.</div>
+    <div style="font-size:14px;color:rgba(255,255,255,.4);font-weight:600">🇦🇺 Proudly Australian</div>
+    <div class="footer-leg"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="floaters">
+  <div class="float-btn ct-btn" onclick="window.location='#contact'">
+    <div class="fb-icon">📞</div>
+    <div class="fb-text">Contact Us</div>
+  </div>
+  <div class="float-btn wa-btn" onclick="window.open('https://wa.me/61400000000?text=Hi+Travel+Needs!+I%27d+love+to+know+more+about+your+travel+products','_blank')">
+    <div class="wa-pulse"></div>
+    <div class="fb-icon">
+      <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 12C3 7.03 7.03 3 12 3C16.97 3 21 7.03 21 12C21 16.97 16.97 21 12 21C10.32 21 8.73 20.52 7.39 19.7L3 21L4.3 16.61C3.48 15.27 3 13.68 3 12Z"/>
+        <path d="M8.5 9.5C8.5 9.5 8.5 8.5 9.5 8.5C10.5 8.5 11 10 11 10.5C11 11 10 11.5 10 12C10 12.5 11.5 14.5 13 15C14 15.5 14.5 14.5 14.5 14.5C15 14 15.5 14 16 14.5C16.5 15 17 15.5 17 16C17 16.5 16 17 15 17C14 17 11 16 9.5 13.5C8 11 8.5 9.5 8.5 9.5Z" fill="#25D366"/>
+      </svg>
+    </div>
+    <div class="fb-text">Chat on WhatsApp</div>
+  </div>
+</div>
+
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- LOGIN MODAL -->
+<div class="login-overlay" id="loginOverlay" onclick="if(event.target===this)closeLogin()">
+  <div class="login-modal">
+    <button class="login-modal-close" onclick="closeLogin()">✕</button>
+    <div class="login-modal-logo">✈️</div>
+    <h3>Welcome Back</h3>
+    <p class="lm-sub">Sign in to your Travel Needs account</p>
+    <div class="lm-tabs">
+      <button class="lm-tab active" onclick="switchTab(this,'Login')">Sign In</button>
+      <button class="lm-tab" onclick="switchTab(this,'Register')">Register</button>
+    </div>
+    <div class="lm-panel active" id="lmLogin">
+      <div class="lm-field"><label>Email Address</label><input type="email" placeholder="you@example.com"></div>
+      <div class="lm-field"><label>Password</label><input type="password" placeholder="Enter your password"></div>
+      <button class="lm-submit">Sign In →</button>
+      <div class="lm-divider"><span>OR</span></div>
+      <div class="lm-social"><button class="lm-soc-btn">🇬 Google</button><button class="lm-soc-btn">🍎 Apple</button></div>
+      <div class="lm-foot"><a href="#">Forgot password?</a></div>
+    </div>
+    <div class="lm-panel" id="lmRegister">
+      <div class="lm-field"><label>Full Name</label><input type="text" placeholder="John Smith"></div>
+      <div class="lm-field"><label>Email Address</label><input type="email" placeholder="you@example.com"></div>
+      <div class="lm-field"><label>Password</label><input type="password" placeholder="Create a password"></div>
+      <button class="lm-submit">Create Account →</button>
+      <div class="lm-foot">Already have an account? <a href="#" onclick="switchTab(document.querySelector('.lm-tab'),'Login');return false">Sign in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>🛒 Your Cart <span id="cartCount" style="font-size:18px;font-family:'Nunito',sans-serif;font-weight:700;color:var(--text-mid)"></span></h3>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty">
+      <div class="cart-empty-icon">🧳</div>
+      <p>Your cart is empty</p>
+      <a href="#products" class="btn-primary" onclick="closeCart()" style="margin-top:8px"><span>Start Shopping</span><span>→</span></a>
+    </div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+    <button class="cart-checkout">Checkout →</button>
+  </div>
+</div>
+
+<script>
+// ── SEARCH TOGGLE ──
+function toggleSearch(){
+  const wrap=document.getElementById('navSearchWrap');
+  const inp=document.getElementById('navSearchInput');
+  if(wrap.classList.toggle('expanded')){inp.focus();}
+  else{inp.blur();inp.value='';}
+}
+function closeSearch(){
+  const wrap=document.getElementById('navSearchWrap');
+  if(wrap){wrap.classList.remove('expanded');document.getElementById('navSearchInput').value='';}
+}
+document.addEventListener('click',e=>{
+  const wrap=document.getElementById('navSearchWrap');
+  if(wrap&&!wrap.contains(e.target)&&wrap.classList.contains('expanded'))closeSearch();
+});
+
+// ── LOGIN MODAL ──
+function openLogin(e){if(e)e.preventDefault();document.getElementById('loginOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeLogin(){document.getElementById('loginOverlay').classList.remove('open');document.body.style.overflow='';}
+function switchTab(btn,panelId){
+  document.querySelectorAll('.lm-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.lm-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('lm'+panelId).classList.add('active');
+}
+
+// ── SLIDER ──
+let cur=0,total=5,timer;
+const slides=document.querySelectorAll('.slide');
+const dots=document.querySelectorAll('.dot');
+function goSlide(n){
+  slides[cur].classList.remove('active');dots[cur].classList.remove('active');
+  cur=(n+total)%total;
+  slides[cur].classList.add('active');dots[cur].classList.add('active');
+  resetTimer();
+}
+function changeSlide(d){goSlide(cur+d)}
+function resetTimer(){clearInterval(timer);timer=setInterval(()=>goSlide(cur+1),5000)}
+resetTimer();
+
+// ── NAV SHRINK ──
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('solid',scrollY>60);
+  document.getElementById('btt').classList.toggle('vis',scrollY>300);
+},{passive:true});
+
+// ── MOBILE MENU ──
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+document.querySelectorAll('.mobile-menu a').forEach(a=>{
+  a.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open'));
+});
+
+// ── SCROLL REVEAL ──
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// ── PRODUCT FILTER ──
+function filterProds(btn,cat){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.prod-card').forEach(c=>{
+    c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';
+  });
+}
+
+// ── CART STATE ──
+let cartItems=[];
+function addCart(btn,name,price,img){
+  const orig=btn.textContent;
+  btn.textContent='✓';btn.style.background='var(--blue)';btn.style.boxShadow='0 0 16px var(--neon-green)';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.style.boxShadow=''},1200);
+  const existing=cartItems.find(i=>i.name===name);
+  if(existing){existing.qty++;}else{cartItems.push({name,price,img,qty:1,id:Date.now()});}
+  renderCart();
+}
+function removeCartItem(id){cartItems=cartItems.filter(i=>i.id!==id);renderCart();}
+
+function renderCart(){
+  const count=cartItems.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent=count>0?`(${count})`:'';
+
+  // FIX: safe nav badge update (no floating cartBadge element to worry about)
+  const navBadge=document.getElementById('navCartBadge');
+  if(navBadge){
+    navBadge.textContent=count>9?'9+':count;
+    navBadge.classList.toggle('has-items',count>0);
+  }
+
+  const body=document.getElementById('cartBody');
+  const foot=document.getElementById('cartFoot');
+  if(cartItems.length===0){
+    body.innerHTML=`<div class="cart-empty"><div class="cart-empty-icon">🧳</div><p>Your cart is empty</p><a href="#products" class="btn-primary" onclick="closeCart()" style="margin-top:8px"><span>Start Shopping</span><span>→</span></a></div>`;
+    foot.style.display='none';return;
+  }
+  let total=0;
+  body.innerHTML=cartItems.map(i=>{
+    const p=parseFloat(i.price.replace('$',''));total+=p*i.qty;
+    return `<div class="cart-item"><img class="cart-item-img" src="${i.img}" alt="${i.name}" onerror="this.src='https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=80'"><div class="cart-item-info"><div class="cart-item-name">${i.name}${i.qty>1?` × ${i.qty}`:''}</div><div class="cart-item-price">${i.price}${i.qty>1?' ea.':''}</div></div><button class="cart-item-remove" onclick="removeCartItem(${i.id})">✕</button></div>`;
+  }).join('');
+  document.getElementById('cartTotal').textContent='$'+total.toFixed(2);
+  foot.style.display='block';
+}
+
+function openCart(){document.getElementById('cartDrawer').classList.add('open');document.getElementById('cartOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeCart(){document.getElementById('cartDrawer').classList.remove('open');document.getElementById('cartOverlay').classList.remove('open');document.body.style.overflow='';}
+function toggleWish(el){el.textContent=el.textContent==='🤍'?'❤️':'🤍'}
+function subscribe(btn){
+  const inp=btn.previousElementSibling;
+  if(inp.value.includes('@')){btn.textContent='✓ Subscribed!';btn.style.background='#16a34a';inp.value='';setTimeout(()=>{btn.textContent='Subscribe →';btn.style.background=''},3000);}
+  else{inp.style.borderColor='var(--tomato)';setTimeout(()=>{inp.style.borderColor=''},2000);}
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}});
+});
+
+renderCart();
+</script>
+</body>
+</html>
